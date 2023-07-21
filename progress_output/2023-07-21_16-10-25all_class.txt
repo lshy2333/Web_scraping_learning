@@ -1,0 +1,211 @@
+Chat & support: my new Discord server
+Want to contribute? TheBloke's Patreon page
+These files are GGML format model files for Meta's Llama 2 13B-chat.
+GGML files are for CPU + GPU inference using llama.cpp and libraries and UIs which support this format, such as:
+These are guaranteed to be compatible with any UIs, tools and libraries released since late May. They may be phased out soon, as they are largely superseded by the new k-quant methods.
+These new quantisation methods are compatible with llama.cpp as of June 6th, commit 2d43387.
+They are now also compatible with recent releases of text-generation-webui, KoboldCpp, llama-cpp-python, ctransformers, rustformers and most others. For compatibility with other tools and libraries, please check their documentation.
+The new methods available are:
+Refer to the Provided Files table below to see what files use which methods, and how.
+Note: the above RAM figures assume no GPU offloading. If layers are offloaded to the GPU, this will reduce RAM usage and use VRAM instead.
+I use the following command line; adjust for your tastes and needs:
+Change -t 10 to the number of physical CPU cores you have. For example if your system has 8 cores/16 threads, use -t 8.
+Change -ngl 32 to the number of layers to offload to GPU. Remove it if you don't have GPU acceleration.
+If you want to have a chat-style conversation, replace the -p <PROMPT> argument with -i -ins
+Further instructions here: text-generation-webui/docs/llama.cpp-models.md.
+For further support, and discussions on these models and AI in general, join us at:
+TheBloke AI's Discord server
+Thanks to the chirper.ai team!
+I've had a lot of people ask if they can contribute. I enjoy providing models and helping people, and would love to be able to spend even more time doing it, as well as expanding into new projects like fine tuning/training.
+If you're able and willing to contribute it will be most gratefully received and will help me to keep providing more models, and to start work on new AI projects.
+Donaters will get priority support on any and all AI/LLM/model questions and requests, access to a private Discord room, plus other benefits.
+Special thanks to: Luke from CarbonQuill, Aemon Algiz.
+Patreon special mentions: Space Cruiser, Nikolai Manek, Sam, Chris McCloskey, Rishabh Srivastava, Kalila, Spiking Neurons AB, Khalefa Al-Ahmad, WelcomeToTheClub, Chadd, Lone Striker, Viktor Bowallius, Edmond Seymore, Ai Maven, Chris Smitley, Dave, Alexandros Triantafyllidis, Luke @flexchar, Elle, ya boyyy, Talal Aujan, Alex , Jonathan Leane, Deep Realms, Randy H, subjectnull, Preetika Verma, Joseph William Delisle, Michael Levine, chris gileta, K, Oscar Rangel, LangChain4j, Trenton Dambrowitz, Eugene Pentland, Johann-Peter Hartmann, Femi Adebogun, Illia Dulskyi, senxiiz, Daniel P. Andersen, Sean Connelly, Artur Olbinski, RoA, Mano Prime, Derek Yates, Raven Klaugh, David Flickinger, Willem Michiel, Pieter, Willian Hasse, vamX, Luke Pendergrass, webtim, Ghost , Rainer Wilmers, Nathan LeClaire, Will Dee, Cory Kujawski, John Detwiler, Fred von Graf, biorpg, Iucharbius , Imad Khwaja, Pierre Kircher, terasurfer , Asp the Wyvern, John Villwock, theTransient, zynix , Gabriel Tamborski, Fen Risland, Gabriel Puliatti, Matthew Berman, Pyrater, SuperWojo, Stephen Murray, Karl Bernard, Ajan Kanaga, Greatston Gnanesh, Junyu Yang.
+Thank you to all my generous patrons and donaters!
+Llama 2 is a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. This is the repository for the 13B fine-tuned model, optimized for dialogue use cases and converted for the Hugging Face Transformers format. Links to other models can be found in the index at the bottom.
+Note: Use of this model is governed by the Meta license. In order to download the model weights and tokenizer, please visit the website and accept our License before requesting access here.
+Meta developed and publicly released the Llama 2 family of large language models (LLMs), a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. Our fine-tuned LLMs, called Llama-2-Chat, are optimized for dialogue use cases. Llama-2-Chat models outperform open-source chat models on most benchmarks we tested, and in our human evaluations for helpfulness and safety, are on par with some popular closed-source models like ChatGPT and PaLM.
+Model Developers Meta
+Variations Llama 2 comes in a range of parameter sizes ¡ª 7B, 13B, and 70B ¡ª as well as pretrained and fine-tuned variations.
+Input Models input text only.
+Output Models generate text only.
+Model Architecture Llama 2 is an auto-regressive language model that uses an optimized transformer architecture. The tuned versions use supervised fine-tuning (SFT) and reinforcement learning with human feedback (RLHF) to align to human preferences for helpfulness and safety.
+Llama 2 family of models. Token counts refer to pretraining data only. All models are trained with a global batch-size of 4M tokens. Bigger models -  70B -- use Grouped-Query Attention (GQA) for improved inference scalability.
+Model Dates Llama 2 was trained between January 2023 and July 2023.
+Status This is a static model trained on an offline dataset. Future versions of the tuned models will be released as we improve model safety with community feedback.
+License A custom commercial license is available at: https://ai.meta.com/resources/models-and-libraries/llama-downloads/
+Intended Use Cases Llama 2 is intended for commercial and research use in English. Tuned models are intended for assistant-like chat, whereas pretrained models can be adapted for a variety of natural language generation tasks.
+To get the expected features and performance for the chat versions, a specific formatting needs to be followed, including the INST and <<SYS>> tags, BOS and EOS tokens, and the whitespaces and breaklines in between (we recommend calling strip() on inputs to avoid double-spaces). See our reference code in github for details: chat_completion.
+Out-of-scope Uses Use in any manner that violates applicable laws or regulations (including trade compliance laws).Use in languages other than English. Use in any other way that is prohibited by the Acceptable Use Policy and Licensing Agreement for Llama 2.
+Training Factors We used custom training libraries, Meta's Research Super Cluster, and production clusters for pretraining. Fine-tuning, annotation, and evaluation were also performed on third-party cloud compute.
+Carbon Footprint Pretraining utilized a cumulative 3.3M GPU hours of computation on hardware of type A100-80GB (TDP of 350-400W). Estimated total emissions were 539 tCO2eq, 100% of which were offset by Meta¡¯s sustainability program.
+CO2 emissions during pretraining. Time: total GPU time required for training each model. Power Consumption: peak power capacity per GPU device for the GPUs used adjusted for power usage efficiency. 100% of the emissions are directly offset by Meta's sustainability program, and because we are openly releasing these models, the pretraining costs do not need to be incurred by others.
+Overview Llama 2 was pretrained on 2 trillion tokens of data from publicly available sources. The fine-tuning data includes publicly available instruction datasets, as well as over one million new human-annotated examples. Neither the pretraining nor the fine-tuning datasets include Meta user data.
+Data Freshness The pretraining data has a cutoff of September 2022, but some tuning data is more recent, up to July 2023.
+In this section, we report the results for the Llama 1 and Llama 2 models on standard academic benchmarks.For all the evaluations, we use our internal evaluations library.
+Overall performance on grouped academic benchmarks. Code: We report the average pass@1 scores of our models on HumanEval and MBPP. Commonsense Reasoning: We report the average of PIQA, SIQA, HellaSwag, WinoGrande, ARC easy and challenge, OpenBookQA, and CommonsenseQA. We report 7-shot results for CommonSenseQA and 0-shot results for all other benchmarks. World Knowledge: We evaluate the 5-shot performance on NaturalQuestions and TriviaQA and report the average. Reading Comprehension: For reading comprehension, we report the 0-shot average on SQuAD, QuAC, and BoolQ. MATH: We report the average of the GSM8K (8 shot) and MATH (4 shot) benchmarks at top 1.
+Evaluation of pretrained LLMs on automatic safety benchmarks. For TruthfulQA, we present the percentage of generations that are both truthful and informative (the higher the better). For ToxiGen, we present the percentage of toxic generations (the smaller the better).
+Evaluation of fine-tuned LLMs on different safety datasets. Same metric definitions as above.
+Llama 2 is a new technology that carries risks with use. Testing conducted to date has been in English, and has not covered, nor could it cover all scenarios. For these reasons, as with all LLMs, Llama 2¡¯s potential outputs cannot be predicted in advance, and the model may in some instances produce inaccurate, biased or other objectionable responses to user prompts. Therefore, before deploying any applications of Llama 2, developers should perform safety testing and tuning tailored to their specific applications of the model.
+Please see the Responsible Use Guide available at https://ai.meta.com/llama/responsible-use-guide/
+Please report any software ¡°bug,¡± or other problems with the models through one of the following means:
+Inference API has been turned off for this model.
+Chat & support: my new Discord server
+Want to contribute? TheBloke's Patreon page
+These files are GGML format model files for Meta's Llama 2 13B-chat.
+GGML files are for CPU + GPU inference using llama.cpp and libraries and UIs which support this format, such as:
+These are guaranteed to be compatible with any UIs, tools and libraries released since late May. They may be phased out soon, as they are largely superseded by the new k-quant methods.
+These new quantisation methods are compatible with llama.cpp as of June 6th, commit 2d43387.
+They are now also compatible with recent releases of text-generation-webui, KoboldCpp, llama-cpp-python, ctransformers, rustformers and most others. For compatibility with other tools and libraries, please check their documentation.
+The new methods available are:
+Refer to the Provided Files table below to see what files use which methods, and how.
+Note: the above RAM figures assume no GPU offloading. If layers are offloaded to the GPU, this will reduce RAM usage and use VRAM instead.
+I use the following command line; adjust for your tastes and needs:
+Change -t 10 to the number of physical CPU cores you have. For example if your system has 8 cores/16 threads, use -t 8.
+Change -ngl 32 to the number of layers to offload to GPU. Remove it if you don't have GPU acceleration.
+If you want to have a chat-style conversation, replace the -p <PROMPT> argument with -i -ins
+Further instructions here: text-generation-webui/docs/llama.cpp-models.md.
+For further support, and discussions on these models and AI in general, join us at:
+TheBloke AI's Discord server
+Thanks to the chirper.ai team!
+I've had a lot of people ask if they can contribute. I enjoy providing models and helping people, and would love to be able to spend even more time doing it, as well as expanding into new projects like fine tuning/training.
+If you're able and willing to contribute it will be most gratefully received and will help me to keep providing more models, and to start work on new AI projects.
+Donaters will get priority support on any and all AI/LLM/model questions and requests, access to a private Discord room, plus other benefits.
+Special thanks to: Luke from CarbonQuill, Aemon Algiz.
+Patreon special mentions: Space Cruiser, Nikolai Manek, Sam, Chris McCloskey, Rishabh Srivastava, Kalila, Spiking Neurons AB, Khalefa Al-Ahmad, WelcomeToTheClub, Chadd, Lone Striker, Viktor Bowallius, Edmond Seymore, Ai Maven, Chris Smitley, Dave, Alexandros Triantafyllidis, Luke @flexchar, Elle, ya boyyy, Talal Aujan, Alex , Jonathan Leane, Deep Realms, Randy H, subjectnull, Preetika Verma, Joseph William Delisle, Michael Levine, chris gileta, K, Oscar Rangel, LangChain4j, Trenton Dambrowitz, Eugene Pentland, Johann-Peter Hartmann, Femi Adebogun, Illia Dulskyi, senxiiz, Daniel P. Andersen, Sean Connelly, Artur Olbinski, RoA, Mano Prime, Derek Yates, Raven Klaugh, David Flickinger, Willem Michiel, Pieter, Willian Hasse, vamX, Luke Pendergrass, webtim, Ghost , Rainer Wilmers, Nathan LeClaire, Will Dee, Cory Kujawski, John Detwiler, Fred von Graf, biorpg, Iucharbius , Imad Khwaja, Pierre Kircher, terasurfer , Asp the Wyvern, John Villwock, theTransient, zynix , Gabriel Tamborski, Fen Risland, Gabriel Puliatti, Matthew Berman, Pyrater, SuperWojo, Stephen Murray, Karl Bernard, Ajan Kanaga, Greatston Gnanesh, Junyu Yang.
+Thank you to all my generous patrons and donaters!
+Llama 2 is a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. This is the repository for the 13B fine-tuned model, optimized for dialogue use cases and converted for the Hugging Face Transformers format. Links to other models can be found in the index at the bottom.
+Note: Use of this model is governed by the Meta license. In order to download the model weights and tokenizer, please visit the website and accept our License before requesting access here.
+Meta developed and publicly released the Llama 2 family of large language models (LLMs), a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. Our fine-tuned LLMs, called Llama-2-Chat, are optimized for dialogue use cases. Llama-2-Chat models outperform open-source chat models on most benchmarks we tested, and in our human evaluations for helpfulness and safety, are on par with some popular closed-source models like ChatGPT and PaLM.
+Model Developers Meta
+Variations Llama 2 comes in a range of parameter sizes ¡ª 7B, 13B, and 70B ¡ª as well as pretrained and fine-tuned variations.
+Input Models input text only.
+Output Models generate text only.
+Model Architecture Llama 2 is an auto-regressive language model that uses an optimized transformer architecture. The tuned versions use supervised fine-tuning (SFT) and reinforcement learning with human feedback (RLHF) to align to human preferences for helpfulness and safety.
+Llama 2 family of models. Token counts refer to pretraining data only. All models are trained with a global batch-size of 4M tokens. Bigger models -  70B -- use Grouped-Query Attention (GQA) for improved inference scalability.
+Model Dates Llama 2 was trained between January 2023 and July 2023.
+Status This is a static model trained on an offline dataset. Future versions of the tuned models will be released as we improve model safety with community feedback.
+License A custom commercial license is available at: https://ai.meta.com/resources/models-and-libraries/llama-downloads/
+Intended Use Cases Llama 2 is intended for commercial and research use in English. Tuned models are intended for assistant-like chat, whereas pretrained models can be adapted for a variety of natural language generation tasks.
+To get the expected features and performance for the chat versions, a specific formatting needs to be followed, including the INST and <<SYS>> tags, BOS and EOS tokens, and the whitespaces and breaklines in between (we recommend calling strip() on inputs to avoid double-spaces). See our reference code in github for details: chat_completion.
+Out-of-scope Uses Use in any manner that violates applicable laws or regulations (including trade compliance laws).Use in languages other than English. Use in any other way that is prohibited by the Acceptable Use Policy and Licensing Agreement for Llama 2.
+Training Factors We used custom training libraries, Meta's Research Super Cluster, and production clusters for pretraining. Fine-tuning, annotation, and evaluation were also performed on third-party cloud compute.
+Carbon Footprint Pretraining utilized a cumulative 3.3M GPU hours of computation on hardware of type A100-80GB (TDP of 350-400W). Estimated total emissions were 539 tCO2eq, 100% of which were offset by Meta¡¯s sustainability program.
+CO2 emissions during pretraining. Time: total GPU time required for training each model. Power Consumption: peak power capacity per GPU device for the GPUs used adjusted for power usage efficiency. 100% of the emissions are directly offset by Meta's sustainability program, and because we are openly releasing these models, the pretraining costs do not need to be incurred by others.
+Overview Llama 2 was pretrained on 2 trillion tokens of data from publicly available sources. The fine-tuning data includes publicly available instruction datasets, as well as over one million new human-annotated examples. Neither the pretraining nor the fine-tuning datasets include Meta user data.
+Data Freshness The pretraining data has a cutoff of September 2022, but some tuning data is more recent, up to July 2023.
+In this section, we report the results for the Llama 1 and Llama 2 models on standard academic benchmarks.For all the evaluations, we use our internal evaluations library.
+Overall performance on grouped academic benchmarks. Code: We report the average pass@1 scores of our models on HumanEval and MBPP. Commonsense Reasoning: We report the average of PIQA, SIQA, HellaSwag, WinoGrande, ARC easy and challenge, OpenBookQA, and CommonsenseQA. We report 7-shot results for CommonSenseQA and 0-shot results for all other benchmarks. World Knowledge: We evaluate the 5-shot performance on NaturalQuestions and TriviaQA and report the average. Reading Comprehension: For reading comprehension, we report the 0-shot average on SQuAD, QuAC, and BoolQ. MATH: We report the average of the GSM8K (8 shot) and MATH (4 shot) benchmarks at top 1.
+Evaluation of pretrained LLMs on automatic safety benchmarks. For TruthfulQA, we present the percentage of generations that are both truthful and informative (the higher the better). For ToxiGen, we present the percentage of toxic generations (the smaller the better).
+Evaluation of fine-tuned LLMs on different safety datasets. Same metric definitions as above.
+Llama 2 is a new technology that carries risks with use. Testing conducted to date has been in English, and has not covered, nor could it cover all scenarios. For these reasons, as with all LLMs, Llama 2¡¯s potential outputs cannot be predicted in advance, and the model may in some instances produce inaccurate, biased or other objectionable responses to user prompts. Therefore, before deploying any applications of Llama 2, developers should perform safety testing and tuning tailored to their specific applications of the model.
+Please see the Responsible Use Guide available at https://ai.meta.com/llama/responsible-use-guide/
+Please report any software ¡°bug,¡± or other problems with the models through one of the following means:
+Inference API has been turned off for this model.
+Chat & support: my new Discord server
+Want to contribute? TheBloke's Patreon page
+These files are GGML format model files for Meta's Llama 2 13B-chat.
+GGML files are for CPU + GPU inference using llama.cpp and libraries and UIs which support this format, such as:
+These are guaranteed to be compatible with any UIs, tools and libraries released since late May. They may be phased out soon, as they are largely superseded by the new k-quant methods.
+These new quantisation methods are compatible with llama.cpp as of June 6th, commit 2d43387.
+They are now also compatible with recent releases of text-generation-webui, KoboldCpp, llama-cpp-python, ctransformers, rustformers and most others. For compatibility with other tools and libraries, please check their documentation.
+The new methods available are:
+Refer to the Provided Files table below to see what files use which methods, and how.
+Note: the above RAM figures assume no GPU offloading. If layers are offloaded to the GPU, this will reduce RAM usage and use VRAM instead.
+I use the following command line; adjust for your tastes and needs:
+Change -t 10 to the number of physical CPU cores you have. For example if your system has 8 cores/16 threads, use -t 8.
+Change -ngl 32 to the number of layers to offload to GPU. Remove it if you don't have GPU acceleration.
+If you want to have a chat-style conversation, replace the -p <PROMPT> argument with -i -ins
+Further instructions here: text-generation-webui/docs/llama.cpp-models.md.
+For further support, and discussions on these models and AI in general, join us at:
+TheBloke AI's Discord server
+Thanks to the chirper.ai team!
+I've had a lot of people ask if they can contribute. I enjoy providing models and helping people, and would love to be able to spend even more time doing it, as well as expanding into new projects like fine tuning/training.
+If you're able and willing to contribute it will be most gratefully received and will help me to keep providing more models, and to start work on new AI projects.
+Donaters will get priority support on any and all AI/LLM/model questions and requests, access to a private Discord room, plus other benefits.
+Special thanks to: Luke from CarbonQuill, Aemon Algiz.
+Patreon special mentions: Space Cruiser, Nikolai Manek, Sam, Chris McCloskey, Rishabh Srivastava, Kalila, Spiking Neurons AB, Khalefa Al-Ahmad, WelcomeToTheClub, Chadd, Lone Striker, Viktor Bowallius, Edmond Seymore, Ai Maven, Chris Smitley, Dave, Alexandros Triantafyllidis, Luke @flexchar, Elle, ya boyyy, Talal Aujan, Alex , Jonathan Leane, Deep Realms, Randy H, subjectnull, Preetika Verma, Joseph William Delisle, Michael Levine, chris gileta, K, Oscar Rangel, LangChain4j, Trenton Dambrowitz, Eugene Pentland, Johann-Peter Hartmann, Femi Adebogun, Illia Dulskyi, senxiiz, Daniel P. Andersen, Sean Connelly, Artur Olbinski, RoA, Mano Prime, Derek Yates, Raven Klaugh, David Flickinger, Willem Michiel, Pieter, Willian Hasse, vamX, Luke Pendergrass, webtim, Ghost , Rainer Wilmers, Nathan LeClaire, Will Dee, Cory Kujawski, John Detwiler, Fred von Graf, biorpg, Iucharbius , Imad Khwaja, Pierre Kircher, terasurfer , Asp the Wyvern, John Villwock, theTransient, zynix , Gabriel Tamborski, Fen Risland, Gabriel Puliatti, Matthew Berman, Pyrater, SuperWojo, Stephen Murray, Karl Bernard, Ajan Kanaga, Greatston Gnanesh, Junyu Yang.
+Thank you to all my generous patrons and donaters!
+Llama 2 is a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. This is the repository for the 13B fine-tuned model, optimized for dialogue use cases and converted for the Hugging Face Transformers format. Links to other models can be found in the index at the bottom.
+Note: Use of this model is governed by the Meta license. In order to download the model weights and tokenizer, please visit the website and accept our License before requesting access here.
+Meta developed and publicly released the Llama 2 family of large language models (LLMs), a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. Our fine-tuned LLMs, called Llama-2-Chat, are optimized for dialogue use cases. Llama-2-Chat models outperform open-source chat models on most benchmarks we tested, and in our human evaluations for helpfulness and safety, are on par with some popular closed-source models like ChatGPT and PaLM.
+Model Developers Meta
+Variations Llama 2 comes in a range of parameter sizes ¡ª 7B, 13B, and 70B ¡ª as well as pretrained and fine-tuned variations.
+Input Models input text only.
+Output Models generate text only.
+Model Architecture Llama 2 is an auto-regressive language model that uses an optimized transformer architecture. The tuned versions use supervised fine-tuning (SFT) and reinforcement learning with human feedback (RLHF) to align to human preferences for helpfulness and safety.
+Llama 2 family of models. Token counts refer to pretraining data only. All models are trained with a global batch-size of 4M tokens. Bigger models -  70B -- use Grouped-Query Attention (GQA) for improved inference scalability.
+Model Dates Llama 2 was trained between January 2023 and July 2023.
+Status This is a static model trained on an offline dataset. Future versions of the tuned models will be released as we improve model safety with community feedback.
+License A custom commercial license is available at: https://ai.meta.com/resources/models-and-libraries/llama-downloads/
+Intended Use Cases Llama 2 is intended for commercial and research use in English. Tuned models are intended for assistant-like chat, whereas pretrained models can be adapted for a variety of natural language generation tasks.
+To get the expected features and performance for the chat versions, a specific formatting needs to be followed, including the INST and <<SYS>> tags, BOS and EOS tokens, and the whitespaces and breaklines in between (we recommend calling strip() on inputs to avoid double-spaces). See our reference code in github for details: chat_completion.
+Out-of-scope Uses Use in any manner that violates applicable laws or regulations (including trade compliance laws).Use in languages other than English. Use in any other way that is prohibited by the Acceptable Use Policy and Licensing Agreement for Llama 2.
+Training Factors We used custom training libraries, Meta's Research Super Cluster, and production clusters for pretraining. Fine-tuning, annotation, and evaluation were also performed on third-party cloud compute.
+Carbon Footprint Pretraining utilized a cumulative 3.3M GPU hours of computation on hardware of type A100-80GB (TDP of 350-400W). Estimated total emissions were 539 tCO2eq, 100% of which were offset by Meta¡¯s sustainability program.
+CO2 emissions during pretraining. Time: total GPU time required for training each model. Power Consumption: peak power capacity per GPU device for the GPUs used adjusted for power usage efficiency. 100% of the emissions are directly offset by Meta's sustainability program, and because we are openly releasing these models, the pretraining costs do not need to be incurred by others.
+Overview Llama 2 was pretrained on 2 trillion tokens of data from publicly available sources. The fine-tuning data includes publicly available instruction datasets, as well as over one million new human-annotated examples. Neither the pretraining nor the fine-tuning datasets include Meta user data.
+Data Freshness The pretraining data has a cutoff of September 2022, but some tuning data is more recent, up to July 2023.
+In this section, we report the results for the Llama 1 and Llama 2 models on standard academic benchmarks.For all the evaluations, we use our internal evaluations library.
+Overall performance on grouped academic benchmarks. Code: We report the average pass@1 scores of our models on HumanEval and MBPP. Commonsense Reasoning: We report the average of PIQA, SIQA, HellaSwag, WinoGrande, ARC easy and challenge, OpenBookQA, and CommonsenseQA. We report 7-shot results for CommonSenseQA and 0-shot results for all other benchmarks. World Knowledge: We evaluate the 5-shot performance on NaturalQuestions and TriviaQA and report the average. Reading Comprehension: For reading comprehension, we report the 0-shot average on SQuAD, QuAC, and BoolQ. MATH: We report the average of the GSM8K (8 shot) and MATH (4 shot) benchmarks at top 1.
+Evaluation of pretrained LLMs on automatic safety benchmarks. For TruthfulQA, we present the percentage of generations that are both truthful and informative (the higher the better). For ToxiGen, we present the percentage of toxic generations (the smaller the better).
+Evaluation of fine-tuned LLMs on different safety datasets. Same metric definitions as above.
+Llama 2 is a new technology that carries risks with use. Testing conducted to date has been in English, and has not covered, nor could it cover all scenarios. For these reasons, as with all LLMs, Llama 2¡¯s potential outputs cannot be predicted in advance, and the model may in some instances produce inaccurate, biased or other objectionable responses to user prompts. Therefore, before deploying any applications of Llama 2, developers should perform safety testing and tuning tailored to their specific applications of the model.
+Please see the Responsible Use Guide available at https://ai.meta.com/llama/responsible-use-guide/
+Please report any software ¡°bug,¡± or other problems with the models through one of the following means:
+Chat & support: my new Discord server
+Want to contribute? TheBloke's Patreon page
+These files are GGML format model files for Meta's Llama 2 13B-chat.
+GGML files are for CPU + GPU inference using llama.cpp and libraries and UIs which support this format, such as:
+These are guaranteed to be compatible with any UIs, tools and libraries released since late May. They may be phased out soon, as they are largely superseded by the new k-quant methods.
+These new quantisation methods are compatible with llama.cpp as of June 6th, commit 2d43387.
+They are now also compatible with recent releases of text-generation-webui, KoboldCpp, llama-cpp-python, ctransformers, rustformers and most others. For compatibility with other tools and libraries, please check their documentation.
+The new methods available are:
+Refer to the Provided Files table below to see what files use which methods, and how.
+Note: the above RAM figures assume no GPU offloading. If layers are offloaded to the GPU, this will reduce RAM usage and use VRAM instead.
+I use the following command line; adjust for your tastes and needs:
+Change -t 10 to the number of physical CPU cores you have. For example if your system has 8 cores/16 threads, use -t 8.
+Change -ngl 32 to the number of layers to offload to GPU. Remove it if you don't have GPU acceleration.
+If you want to have a chat-style conversation, replace the -p <PROMPT> argument with -i -ins
+Further instructions here: text-generation-webui/docs/llama.cpp-models.md.
+For further support, and discussions on these models and AI in general, join us at:
+TheBloke AI's Discord server
+Thanks to the chirper.ai team!
+I've had a lot of people ask if they can contribute. I enjoy providing models and helping people, and would love to be able to spend even more time doing it, as well as expanding into new projects like fine tuning/training.
+If you're able and willing to contribute it will be most gratefully received and will help me to keep providing more models, and to start work on new AI projects.
+Donaters will get priority support on any and all AI/LLM/model questions and requests, access to a private Discord room, plus other benefits.
+Special thanks to: Luke from CarbonQuill, Aemon Algiz.
+Patreon special mentions: Space Cruiser, Nikolai Manek, Sam, Chris McCloskey, Rishabh Srivastava, Kalila, Spiking Neurons AB, Khalefa Al-Ahmad, WelcomeToTheClub, Chadd, Lone Striker, Viktor Bowallius, Edmond Seymore, Ai Maven, Chris Smitley, Dave, Alexandros Triantafyllidis, Luke @flexchar, Elle, ya boyyy, Talal Aujan, Alex , Jonathan Leane, Deep Realms, Randy H, subjectnull, Preetika Verma, Joseph William Delisle, Michael Levine, chris gileta, K, Oscar Rangel, LangChain4j, Trenton Dambrowitz, Eugene Pentland, Johann-Peter Hartmann, Femi Adebogun, Illia Dulskyi, senxiiz, Daniel P. Andersen, Sean Connelly, Artur Olbinski, RoA, Mano Prime, Derek Yates, Raven Klaugh, David Flickinger, Willem Michiel, Pieter, Willian Hasse, vamX, Luke Pendergrass, webtim, Ghost , Rainer Wilmers, Nathan LeClaire, Will Dee, Cory Kujawski, John Detwiler, Fred von Graf, biorpg, Iucharbius , Imad Khwaja, Pierre Kircher, terasurfer , Asp the Wyvern, John Villwock, theTransient, zynix , Gabriel Tamborski, Fen Risland, Gabriel Puliatti, Matthew Berman, Pyrater, SuperWojo, Stephen Murray, Karl Bernard, Ajan Kanaga, Greatston Gnanesh, Junyu Yang.
+Thank you to all my generous patrons and donaters!
+Llama 2 is a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. This is the repository for the 13B fine-tuned model, optimized for dialogue use cases and converted for the Hugging Face Transformers format. Links to other models can be found in the index at the bottom.
+Note: Use of this model is governed by the Meta license. In order to download the model weights and tokenizer, please visit the website and accept our License before requesting access here.
+Meta developed and publicly released the Llama 2 family of large language models (LLMs), a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. Our fine-tuned LLMs, called Llama-2-Chat, are optimized for dialogue use cases. Llama-2-Chat models outperform open-source chat models on most benchmarks we tested, and in our human evaluations for helpfulness and safety, are on par with some popular closed-source models like ChatGPT and PaLM.
+Model Developers Meta
+Variations Llama 2 comes in a range of parameter sizes ¡ª 7B, 13B, and 70B ¡ª as well as pretrained and fine-tuned variations.
+Input Models input text only.
+Output Models generate text only.
+Model Architecture Llama 2 is an auto-regressive language model that uses an optimized transformer architecture. The tuned versions use supervised fine-tuning (SFT) and reinforcement learning with human feedback (RLHF) to align to human preferences for helpfulness and safety.
+Llama 2 family of models. Token counts refer to pretraining data only. All models are trained with a global batch-size of 4M tokens. Bigger models -  70B -- use Grouped-Query Attention (GQA) for improved inference scalability.
+Model Dates Llama 2 was trained between January 2023 and July 2023.
+Status This is a static model trained on an offline dataset. Future versions of the tuned models will be released as we improve model safety with community feedback.
+License A custom commercial license is available at: https://ai.meta.com/resources/models-and-libraries/llama-downloads/
+Intended Use Cases Llama 2 is intended for commercial and research use in English. Tuned models are intended for assistant-like chat, whereas pretrained models can be adapted for a variety of natural language generation tasks.
+To get the expected features and performance for the chat versions, a specific formatting needs to be followed, including the INST and <<SYS>> tags, BOS and EOS tokens, and the whitespaces and breaklines in between (we recommend calling strip() on inputs to avoid double-spaces). See our reference code in github for details: chat_completion.
+Out-of-scope Uses Use in any manner that violates applicable laws or regulations (including trade compliance laws).Use in languages other than English. Use in any other way that is prohibited by the Acceptable Use Policy and Licensing Agreement for Llama 2.
+Training Factors We used custom training libraries, Meta's Research Super Cluster, and production clusters for pretraining. Fine-tuning, annotation, and evaluation were also performed on third-party cloud compute.
+Carbon Footprint Pretraining utilized a cumulative 3.3M GPU hours of computation on hardware of type A100-80GB (TDP of 350-400W). Estimated total emissions were 539 tCO2eq, 100% of which were offset by Meta¡¯s sustainability program.
+CO2 emissions during pretraining. Time: total GPU time required for training each model. Power Consumption: peak power capacity per GPU device for the GPUs used adjusted for power usage efficiency. 100% of the emissions are directly offset by Meta's sustainability program, and because we are openly releasing these models, the pretraining costs do not need to be incurred by others.
+Overview Llama 2 was pretrained on 2 trillion tokens of data from publicly available sources. The fine-tuning data includes publicly available instruction datasets, as well as over one million new human-annotated examples. Neither the pretraining nor the fine-tuning datasets include Meta user data.
+Data Freshness The pretraining data has a cutoff of September 2022, but some tuning data is more recent, up to July 2023.
+In this section, we report the results for the Llama 1 and Llama 2 models on standard academic benchmarks.For all the evaluations, we use our internal evaluations library.
+Overall performance on grouped academic benchmarks. Code: We report the average pass@1 scores of our models on HumanEval and MBPP. Commonsense Reasoning: We report the average of PIQA, SIQA, HellaSwag, WinoGrande, ARC easy and challenge, OpenBookQA, and CommonsenseQA. We report 7-shot results for CommonSenseQA and 0-shot results for all other benchmarks. World Knowledge: We evaluate the 5-shot performance on NaturalQuestions and TriviaQA and report the average. Reading Comprehension: For reading comprehension, we report the 0-shot average on SQuAD, QuAC, and BoolQ. MATH: We report the average of the GSM8K (8 shot) and MATH (4 shot) benchmarks at top 1.
+Evaluation of pretrained LLMs on automatic safety benchmarks. For TruthfulQA, we present the percentage of generations that are both truthful and informative (the higher the better). For ToxiGen, we present the percentage of toxic generations (the smaller the better).
+Evaluation of fine-tuned LLMs on different safety datasets. Same metric definitions as above.
+Llama 2 is a new technology that carries risks with use. Testing conducted to date has been in English, and has not covered, nor could it cover all scenarios. For these reasons, as with all LLMs, Llama 2¡¯s potential outputs cannot be predicted in advance, and the model may in some instances produce inaccurate, biased or other objectionable responses to user prompts. Therefore, before deploying any applications of Llama 2, developers should perform safety testing and tuning tailored to their specific applications of the model.
+Please see the Responsible Use Guide available at https://ai.meta.com/llama/responsible-use-guide/
+Please report any software ¡°bug,¡± or other problems with the models through one of the following means:
+Chat & support: my new Discord server
+Want to contribute? TheBloke's Patreon page
+Chat & support: my new Discord server
+Want to contribute? TheBloke's Patreon page
+Inference API has been turned off for this model.

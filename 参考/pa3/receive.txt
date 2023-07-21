@@ -1,0 +1,166 @@
+助手的回复：
+本教程将介绍如何使用 Django 创建一个使用 JSON 数据库的 Web 应用。
+
+前置知识：
+- Python 基础知识
+- Django 基础知识
+- JSON 基础知识
+
+步骤 1 - 创建 Django 项目和应用
+在本教程中，我们使用 Django 3.1.2 版本。在命令行中运行以下命令创建 Django 项目和应用：
+
+```
+django-admin startproject jsondatabase
+cd jsondatabase
+python manage.py startapp poll
+```
+
+步骤 2 - 配置数据库
+在 settings.py 文件中，下面的代码行将 Dango 的默认数据库改为 JSON 数据库：
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.json',
+    }
+}
+```
+
+这段代码指定了 jsondatabase/db.json 文件作为默认的数据库。我们可以使用 Python 自带的 json 模块来操作这个文件。
+
+步骤 3 - 创建模型
+在应用的 models.py 文件中，定义一个模型用于存储我们的投票数据：
+
+```python
+from django.db import models
+import json
+
+class Poll(models.Model):
+    question = models.CharField(max_length=200)
+    choices = models.JSONField(default=list)
+
+    def __str__(self):
+        return self.question
+
+    def save(self, *args, **kwargs):
+        self.choices = json.dumps(self.choices)
+        super().save(*args, **kwargs)
+
+    def get_choices(self):
+        return json.loads(self.choices)
+```
+
+这个模型包含两个字段：问题（question）和选项（choices）。
+
+我们使用了 Django 的 JSONField 来存储选项，而不是通常使用的 CharField 或者 TextField。 JSONField 可以将 Python 对象序列化成 JSON 字符串并存储到数据库中。
+
+save 方法中，我们使用了 json.dumps 将选项列表转换为 JSON 字符串，并保存到数据库中。get_choices 方法则用于从 JSON 字符串中重新加载选项列表。
+
+步骤 4 - 迁移数据库
+在命令行中运行以下命令，进行数据库迁移：
+
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+步骤 5 - 创建视图
+在 poll/views.py 文件中，定义一个视图来展示投票列表和详情：
+
+```python
+from django.shortcuts import render, get_object_or_404
+from .models import Poll
+
+def index(request):
+    polls = Poll.objects.all()
+    return render(request, 'poll/index.html', {'polls': polls})
+
+def detail(request, poll_id):
+    poll = get_object_or_404(Poll, pk=poll_id)
+    return render(request, 'poll/detail.html', {'poll': poll})
+```
+
+这个视图使用了 render 方法来渲染 poll/index.html 模板和 poll/detail.html 模板。
+
+步骤 6 - 创建模板
+在 poll/templates/poll/index.html 文件中，定义一个模板来显示投票列表：
+
+```html
+{% extends 'poll/base.html' %}
+
+{% block content %}
+    <h1>Polls</h1>
+        {% if polls %}
+            <ul>
+                {% for poll in polls %}
+                    <li><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No polls are available.</p>
+        {% endif %}
+{% endblock %}
+```
+
+在 poll/templates/poll/detail.html 文件中，定义一个模板来显示投票详情：
+
+```html
+{% extends 'poll/base.html' %}
+
+{% block content %}
+    <h2>{{ poll.question }}</h2>
+    <ul>
+        {% for choice in poll.get_choices() %}
+            <li>{{ choice }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+```
+
+这个模板使用了 poll.get_choices 方法来获取选项列表并展示。
+
+在 poll/templates/poll/base.html 文件中，定义一个基础模板，用于包含其他模板的公共部分：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Polls{% endblock %}</title>
+</head>
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
+```
+
+步骤 7 - 创建 URL 规则
+在 poll/urls.py 文件中，定义投票应用的 URL 规则：
+
+```python
+from django.urls import path
+from . import views
+
+app_name = 'poll'
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('<int:poll_id>/', views.detail, name='detail'),
+]
+```
+
+这个文件指定了两个 URL 规则，使用 poll/namespace 命名空间，方便在其他地方引用。
+
+步骤 8 - 运行应用
+在命令行中运行以下命令，运行 Django 应用：
+
+```
+python manage.py runserver
+```
+
+打开浏览器访问 `http://127.0.0.1:8000/poll`，就可以看到投票列表页面，点击投票就可以看到投票详情页面。
+
+到此为止，我们就完成了一个使用 JSON 数据库的 Django Web 应用的搭建。当然，实际应用还需要更多的功能和优化才能满足需求。
+请输入问题：
