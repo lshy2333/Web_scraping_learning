@@ -1,9 +1,11 @@
-from Web_Scraping import web_scraping
+from web_scraping_json import web_scraping_json
 print("url:")
 url_name=input()
+print("tag_name:")
+tag_name=input()
 print("class_name:")
 class_name=input()
-result=web_scraping(url_name,class_name)
+result=web_scraping_json(url_name,tag_name,class_name)
 status=result[0]
 content=result[1]
 token_count=str(result[2])
